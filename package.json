@@ -4,9 +4,10 @@
   "description": ".",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npx prisma generate && tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "postinstall": "npx prisma generate"
   },
   "license": "MIT",
   "dependencies": {
