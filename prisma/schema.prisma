@@ -16,11 +16,62 @@ datasource db {
 model User {
   id          String   @id @default(cuid())
   email       String   @unique
-  password    String
-  phone       String
-  countryCode String
   name        String
+  password    String
+  countryCode String
+  phone       String
+  role        Role     @default(USER)
   createdAt   DateTime @default(now())
+  resume      Resume?
   updatedAt   DateTime @updatedAt
+
+  @@index([id])
 }
-  
+
+model Resume {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique // One resume per user
+
+  // Cloud Storage Information
+  fileUrl       String? // Full cloud URL (S3/Cloudinary/etc)
+  fileName      String // Original filename
+  fileSize      Int // Size in bytes
+  fileMimeType  String // MIME type (application/pdf, etc)
+  storageKey    String? // Storage key/path for deletion
+  storageBucket String? // Bucket name (for S3)
+
+  // Processing Status
+  processingStatus   ProcessingStatus @default(PENDING)
+  processingError    String? // Error message if failed
+  processingProgress Int              @default(0) // 0-100
+
+  // Analysis Results (stored as JSON)
+  atsScore        Int? // ATS compatibility score (0-100)
+  analysisData    Json? // Complete analysis results
+  skillsExtracted String[] // Array of extracted skills
+  experienceYears Float? // Years of experience detected
+  suggestions     Json? // Improvement suggestions
+
+  // Timestamps
+  uploadedAt  DateTime  @default(now())
+  processedAt DateTime? // When processing completed
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([processingStatus])
+  @@index([uploadedAt])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProcessingStatus {
+  PENDING // Uploaded, waiting to process
+  PROCESSING // Currently being analyzed
+  COMPLETED // Successfully processed
+  FAILED // Processing failed
+}

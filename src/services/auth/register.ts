@@ -105,6 +105,12 @@ const registerService = async (req: Request, res: Response) => {
       .json({
         success: true,
         message: "User registered successfully",
+        user: {
+          id: newUser.id,
+          email: newUser.email,
+          name: newUser.name,
+          role: newUser.role,
+        },
       });
   } catch (error) {
     //Return Error

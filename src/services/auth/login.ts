@@ -104,6 +104,12 @@ const loginService = async (req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       message: "User logged in successfully",
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
     });
   } catch (error) {
     logger.error(`[Login Service] Internal server error: ${error}`);
