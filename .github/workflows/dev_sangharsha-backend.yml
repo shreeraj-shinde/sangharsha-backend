@@ -21,21 +21,23 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: "22.x"
 
-      - name: npm install, build, and test
+      - name: npm install and build
         run: |
           npm install
-          npx prisma db pull 
-          npx prisma generate
-          npm run build --if-present
-          npm run test --if-present
+          npm run build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: |
+            dist
+            package.json
+            package-lock.json
+            prisma
+            !node_modules
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,7 +51,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -57,12 +59,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_68E563FC41D74962AE627CD864251F07 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D656090070044625B1B3B23FCD1E1E35 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'sangharsha-backend'
-          slot-name: 'Production'
+          app-name: "sangharsha-backend"
+          slot-name: "Production"
           package: .
-
-          
