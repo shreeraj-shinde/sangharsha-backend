@@ -9,7 +9,7 @@ import {
 import { segmentText } from "../services/resume/segmenter";
 import prisma from "../prisma";
 import logger from "../logger";
-import { Prisma } from "../generated/client";
+import { Prisma } from "@prisma/client";
 
 export const uploadResume = async (
   req: AuthenticatedRequest,
