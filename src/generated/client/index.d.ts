@@ -2116,6 +2116,7 @@ export namespace Prisma {
     processingProgress: number | null
     atsScore: number | null
     experienceYears: number | null
+    confidenceScore: number | null
   }
 
   export type ResumeSumAggregateOutputType = {
@@ -2123,6 +2124,7 @@ export namespace Prisma {
     processingProgress: number | null
     atsScore: number | null
     experienceYears: number | null
+    confidenceScore: number | null
   }
 
   export type ResumeMinAggregateOutputType = {
@@ -2139,6 +2141,9 @@ export namespace Prisma {
     processingProgress: number | null
     atsScore: number | null
     experienceYears: number | null
+    rawText: string | null
+    confidenceScore: number | null
+    parsingMethod: string | null
     uploadedAt: Date | null
     processedAt: Date | null
     createdAt: Date | null
@@ -2159,6 +2164,9 @@ export namespace Prisma {
     processingProgress: number | null
     atsScore: number | null
     experienceYears: number | null
+    rawText: string | null
+    confidenceScore: number | null
+    parsingMethod: string | null
     uploadedAt: Date | null
     processedAt: Date | null
     createdAt: Date | null
@@ -2182,6 +2190,10 @@ export namespace Prisma {
     skillsExtracted: number
     experienceYears: number
     suggestions: number
+    parsedData: number
+    rawText: number
+    confidenceScore: number
+    parsingMethod: number
     uploadedAt: number
     processedAt: number
     createdAt: number
@@ -2195,6 +2207,7 @@ export namespace Prisma {
     processingProgress?: true
     atsScore?: true
     experienceYears?: true
+    confidenceScore?: true
   }
 
   export type ResumeSumAggregateInputType = {
@@ -2202,6 +2215,7 @@ export namespace Prisma {
     processingProgress?: true
     atsScore?: true
     experienceYears?: true
+    confidenceScore?: true
   }
 
   export type ResumeMinAggregateInputType = {
@@ -2218,6 +2232,9 @@ export namespace Prisma {
     processingProgress?: true
     atsScore?: true
     experienceYears?: true
+    rawText?: true
+    confidenceScore?: true
+    parsingMethod?: true
     uploadedAt?: true
     processedAt?: true
     createdAt?: true
@@ -2238,6 +2255,9 @@ export namespace Prisma {
     processingProgress?: true
     atsScore?: true
     experienceYears?: true
+    rawText?: true
+    confidenceScore?: true
+    parsingMethod?: true
     uploadedAt?: true
     processedAt?: true
     createdAt?: true
@@ -2261,6 +2281,10 @@ export namespace Prisma {
     skillsExtracted?: true
     experienceYears?: true
     suggestions?: true
+    parsedData?: true
+    rawText?: true
+    confidenceScore?: true
+    parsingMethod?: true
     uploadedAt?: true
     processedAt?: true
     createdAt?: true
@@ -2371,6 +2395,10 @@ export namespace Prisma {
     skillsExtracted: string[]
     experienceYears: number | null
     suggestions: JsonValue | null
+    parsedData: JsonValue | null
+    rawText: string | null
+    confidenceScore: number | null
+    parsingMethod: string | null
     uploadedAt: Date
     processedAt: Date | null
     createdAt: Date
@@ -2413,6 +2441,10 @@ export namespace Prisma {
     skillsExtracted?: boolean
     experienceYears?: boolean
     suggestions?: boolean
+    parsedData?: boolean
+    rawText?: boolean
+    confidenceScore?: boolean
+    parsingMethod?: boolean
     uploadedAt?: boolean
     processedAt?: boolean
     createdAt?: boolean
@@ -2437,6 +2469,10 @@ export namespace Prisma {
     skillsExtracted?: boolean
     experienceYears?: boolean
     suggestions?: boolean
+    parsedData?: boolean
+    rawText?: boolean
+    confidenceScore?: boolean
+    parsingMethod?: boolean
     uploadedAt?: boolean
     processedAt?: boolean
     createdAt?: boolean
@@ -2461,6 +2497,10 @@ export namespace Prisma {
     skillsExtracted?: boolean
     experienceYears?: boolean
     suggestions?: boolean
+    parsedData?: boolean
+    rawText?: boolean
+    confidenceScore?: boolean
+    parsingMethod?: boolean
     uploadedAt?: boolean
     processedAt?: boolean
     createdAt?: boolean
@@ -2485,13 +2525,17 @@ export namespace Prisma {
     skillsExtracted?: boolean
     experienceYears?: boolean
     suggestions?: boolean
+    parsedData?: boolean
+    rawText?: boolean
+    confidenceScore?: boolean
+    parsingMethod?: boolean
     uploadedAt?: boolean
     processedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fileUrl" | "fileName" | "fileSize" | "fileMimeType" | "storageKey" | "storageBucket" | "processingStatus" | "processingError" | "processingProgress" | "atsScore" | "analysisData" | "skillsExtracted" | "experienceYears" | "suggestions" | "uploadedAt" | "processedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["resume"]>
+  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fileUrl" | "fileName" | "fileSize" | "fileMimeType" | "storageKey" | "storageBucket" | "processingStatus" | "processingError" | "processingProgress" | "atsScore" | "analysisData" | "skillsExtracted" | "experienceYears" | "suggestions" | "parsedData" | "rawText" | "confidenceScore" | "parsingMethod" | "uploadedAt" | "processedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["resume"]>
   export type ResumeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2524,6 +2568,10 @@ export namespace Prisma {
       skillsExtracted: string[]
       experienceYears: number | null
       suggestions: Prisma.JsonValue | null
+      parsedData: Prisma.JsonValue | null
+      rawText: string | null
+      confidenceScore: number | null
+      parsingMethod: string | null
       uploadedAt: Date
       processedAt: Date | null
       createdAt: Date
@@ -2968,6 +3016,10 @@ export namespace Prisma {
     readonly skillsExtracted: FieldRef<"Resume", 'String[]'>
     readonly experienceYears: FieldRef<"Resume", 'Float'>
     readonly suggestions: FieldRef<"Resume", 'Json'>
+    readonly parsedData: FieldRef<"Resume", 'Json'>
+    readonly rawText: FieldRef<"Resume", 'String'>
+    readonly confidenceScore: FieldRef<"Resume", 'Float'>
+    readonly parsingMethod: FieldRef<"Resume", 'String'>
     readonly uploadedAt: FieldRef<"Resume", 'DateTime'>
     readonly processedAt: FieldRef<"Resume", 'DateTime'>
     readonly createdAt: FieldRef<"Resume", 'DateTime'>
@@ -3432,6 +3484,10 @@ export namespace Prisma {
     skillsExtracted: 'skillsExtracted',
     experienceYears: 'experienceYears',
     suggestions: 'suggestions',
+    parsedData: 'parsedData',
+    rawText: 'rawText',
+    confidenceScore: 'confidenceScore',
+    parsingMethod: 'parsingMethod',
     uploadedAt: 'uploadedAt',
     processedAt: 'processedAt',
     createdAt: 'createdAt',
@@ -3683,6 +3739,10 @@ export namespace Prisma {
     skillsExtracted?: StringNullableListFilter<"Resume">
     experienceYears?: FloatNullableFilter<"Resume"> | number | null
     suggestions?: JsonNullableFilter<"Resume">
+    parsedData?: JsonNullableFilter<"Resume">
+    rawText?: StringNullableFilter<"Resume"> | string | null
+    confidenceScore?: FloatNullableFilter<"Resume"> | number | null
+    parsingMethod?: StringNullableFilter<"Resume"> | string | null
     uploadedAt?: DateTimeFilter<"Resume"> | Date | string
     processedAt?: DateTimeNullableFilter<"Resume"> | Date | string | null
     createdAt?: DateTimeFilter<"Resume"> | Date | string
@@ -3707,6 +3767,10 @@ export namespace Prisma {
     skillsExtracted?: SortOrder
     experienceYears?: SortOrderInput | SortOrder
     suggestions?: SortOrderInput | SortOrder
+    parsedData?: SortOrderInput | SortOrder
+    rawText?: SortOrderInput | SortOrder
+    confidenceScore?: SortOrderInput | SortOrder
+    parsingMethod?: SortOrderInput | SortOrder
     uploadedAt?: SortOrder
     processedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -3734,6 +3798,10 @@ export namespace Prisma {
     skillsExtracted?: StringNullableListFilter<"Resume">
     experienceYears?: FloatNullableFilter<"Resume"> | number | null
     suggestions?: JsonNullableFilter<"Resume">
+    parsedData?: JsonNullableFilter<"Resume">
+    rawText?: StringNullableFilter<"Resume"> | string | null
+    confidenceScore?: FloatNullableFilter<"Resume"> | number | null
+    parsingMethod?: StringNullableFilter<"Resume"> | string | null
     uploadedAt?: DateTimeFilter<"Resume"> | Date | string
     processedAt?: DateTimeNullableFilter<"Resume"> | Date | string | null
     createdAt?: DateTimeFilter<"Resume"> | Date | string
@@ -3758,6 +3826,10 @@ export namespace Prisma {
     skillsExtracted?: SortOrder
     experienceYears?: SortOrderInput | SortOrder
     suggestions?: SortOrderInput | SortOrder
+    parsedData?: SortOrderInput | SortOrder
+    rawText?: SortOrderInput | SortOrder
+    confidenceScore?: SortOrderInput | SortOrder
+    parsingMethod?: SortOrderInput | SortOrder
     uploadedAt?: SortOrder
     processedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -3789,6 +3861,10 @@ export namespace Prisma {
     skillsExtracted?: StringNullableListFilter<"Resume">
     experienceYears?: FloatNullableWithAggregatesFilter<"Resume"> | number | null
     suggestions?: JsonNullableWithAggregatesFilter<"Resume">
+    parsedData?: JsonNullableWithAggregatesFilter<"Resume">
+    rawText?: StringNullableWithAggregatesFilter<"Resume"> | string | null
+    confidenceScore?: FloatNullableWithAggregatesFilter<"Resume"> | number | null
+    parsingMethod?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     uploadedAt?: DateTimeWithAggregatesFilter<"Resume"> | Date | string
     processedAt?: DateTimeNullableWithAggregatesFilter<"Resume"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Resume"> | Date | string
@@ -3899,6 +3975,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeCreateskillsExtractedInput | string[]
     experienceYears?: number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: string | null
+    confidenceScore?: number | null
+    parsingMethod?: string | null
     uploadedAt?: Date | string
     processedAt?: Date | string | null
     createdAt?: Date | string
@@ -3923,6 +4003,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeCreateskillsExtractedInput | string[]
     experienceYears?: number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: string | null
+    confidenceScore?: number | null
+    parsingMethod?: string | null
     uploadedAt?: Date | string
     processedAt?: Date | string | null
     createdAt?: Date | string
@@ -3945,6 +4029,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeUpdateskillsExtractedInput | string[]
     experienceYears?: NullableFloatFieldUpdateOperationsInput | number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    parsingMethod?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3969,6 +4057,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeUpdateskillsExtractedInput | string[]
     experienceYears?: NullableFloatFieldUpdateOperationsInput | number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    parsingMethod?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3992,6 +4084,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeCreateskillsExtractedInput | string[]
     experienceYears?: number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: string | null
+    confidenceScore?: number | null
+    parsingMethod?: string | null
     uploadedAt?: Date | string
     processedAt?: Date | string | null
     createdAt?: Date | string
@@ -4014,6 +4110,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeUpdateskillsExtractedInput | string[]
     experienceYears?: NullableFloatFieldUpdateOperationsInput | number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    parsingMethod?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4037,6 +4137,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeUpdateskillsExtractedInput | string[]
     experienceYears?: NullableFloatFieldUpdateOperationsInput | number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    parsingMethod?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4283,6 +4387,10 @@ export namespace Prisma {
     skillsExtracted?: SortOrder
     experienceYears?: SortOrder
     suggestions?: SortOrder
+    parsedData?: SortOrder
+    rawText?: SortOrder
+    confidenceScore?: SortOrder
+    parsingMethod?: SortOrder
     uploadedAt?: SortOrder
     processedAt?: SortOrder
     createdAt?: SortOrder
@@ -4294,6 +4402,7 @@ export namespace Prisma {
     processingProgress?: SortOrder
     atsScore?: SortOrder
     experienceYears?: SortOrder
+    confidenceScore?: SortOrder
   }
 
   export type ResumeMaxOrderByAggregateInput = {
@@ -4310,6 +4419,9 @@ export namespace Prisma {
     processingProgress?: SortOrder
     atsScore?: SortOrder
     experienceYears?: SortOrder
+    rawText?: SortOrder
+    confidenceScore?: SortOrder
+    parsingMethod?: SortOrder
     uploadedAt?: SortOrder
     processedAt?: SortOrder
     createdAt?: SortOrder
@@ -4330,6 +4442,9 @@ export namespace Prisma {
     processingProgress?: SortOrder
     atsScore?: SortOrder
     experienceYears?: SortOrder
+    rawText?: SortOrder
+    confidenceScore?: SortOrder
+    parsingMethod?: SortOrder
     uploadedAt?: SortOrder
     processedAt?: SortOrder
     createdAt?: SortOrder
@@ -4341,6 +4456,7 @@ export namespace Prisma {
     processingProgress?: SortOrder
     atsScore?: SortOrder
     experienceYears?: SortOrder
+    confidenceScore?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4839,6 +4955,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeCreateskillsExtractedInput | string[]
     experienceYears?: number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: string | null
+    confidenceScore?: number | null
+    parsingMethod?: string | null
     uploadedAt?: Date | string
     processedAt?: Date | string | null
     createdAt?: Date | string
@@ -4861,6 +4981,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeCreateskillsExtractedInput | string[]
     experienceYears?: number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: string | null
+    confidenceScore?: number | null
+    parsingMethod?: string | null
     uploadedAt?: Date | string
     processedAt?: Date | string | null
     createdAt?: Date | string
@@ -4899,6 +5023,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeUpdateskillsExtractedInput | string[]
     experienceYears?: NullableFloatFieldUpdateOperationsInput | number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    parsingMethod?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4921,6 +5049,10 @@ export namespace Prisma {
     skillsExtracted?: ResumeUpdateskillsExtractedInput | string[]
     experienceYears?: NullableFloatFieldUpdateOperationsInput | number | null
     suggestions?: NullableJsonNullValueInput | InputJsonValue
+    parsedData?: NullableJsonNullValueInput | InputJsonValue
+    rawText?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    parsingMethod?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

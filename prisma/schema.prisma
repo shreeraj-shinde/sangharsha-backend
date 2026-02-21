@@ -53,6 +53,12 @@ model Resume {
   experienceYears Float? // Years of experience detected
   suggestions     Json? // Improvement suggestions
 
+  // Structured Parsed Data
+  parsedData      Json? // Full structured output (ParsedResume type)
+  rawText         String? // Cleaned extracted text
+  confidenceScore Float? // Overall confidence 0.0–1.0
+  parsingMethod   String? // "regex_only" | "llm_only" | "hybrid"
+
   // Timestamps
   uploadedAt  DateTime  @default(now())
   processedAt DateTime? // When processing completed
