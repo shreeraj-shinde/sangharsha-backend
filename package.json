@@ -4,10 +4,10 @@
   "description": ".",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx prisma generate && tsc",
+    "build": "yarn prisma generate && tsc",
     "start": "node dist/index.js",
     "dev": "nodemon --delay 2 src/index.ts",
-    "postinstall": "npx prisma generate"
+    "postinstall": "yarn prisma generate"
   },
   "license": "MIT",
   "dependencies": {
