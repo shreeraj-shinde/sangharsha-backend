@@ -6,9 +6,22 @@ import logger from "../logger";
 
 const resumeRouter = Router();
 
-resumeRouter.post("/resume/upload", authenticate, (req, res) => {
-  logger.info("POST /resume/upload");
-  uploadResume(req, res);
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
 });
+
+resumeRouter.post(
+  "/resume/upload",
+  authenticate,
+  upload.single("resume"),
+  (req, res) => {
+    logger.info("POST /resume/upload");
+    uploadResume(req, res);
+  },
+);
 
 export default resumeRouter;

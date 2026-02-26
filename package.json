@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "yarn prisma generate && tsc",
-    "start": "node dist/index.js",
+    "start": "yarn prisma generate && node dist/index.js",
     "dev": "nodemon --delay 2 src/index.ts",
     "postinstall": "yarn prisma generate"
   },

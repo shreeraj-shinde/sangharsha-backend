@@ -7,6 +7,7 @@ import {
   cleanText,
 } from "../services/resume/extractor";
 import { segmentText } from "../services/resume/segmenter";
+import { normalizeSections } from "../services/resume/normalizer";
 import prisma from "../prisma";
 import logger from "../logger";
 import { Prisma } from "@prisma/client";
@@ -59,45 +60,52 @@ export const uploadResume = async (
     // 4. Segment Text
     const sections = segmentText(cleanedText);
 
-    // 5. Create Resume Record in DB
-    const resume = await prisma.resume.upsert({
-      where: { userId },
-      update: {
-        fileName: file.originalname,
-        fileSize: file.size,
-        fileMimeType: file.mimetype,
-        fileUrl: storageResult.fileUrl,
-        storageKey: storageResult.storageKey,
-        storageBucket: storageResult.storageBucket,
-        rawText: cleanedText,
-        processingStatus: "COMPLETED", // For now, marking as completed after basic parsing
-        processedAt: new Date(),
-        // We can store sections in analysisData or parsedData for now
-        analysisData: { sections } as unknown as Prisma.InputJsonValue,
-      },
-      create: {
-        userId,
-        fileName: file.originalname,
-        fileSize: file.size,
-        fileMimeType: file.mimetype,
-        fileUrl: storageResult.fileUrl,
-        storageKey: storageResult.storageKey,
-        storageBucket: storageResult.storageBucket,
-        rawText: cleanedText,
-        processingStatus: "COMPLETED",
-        processedAt: new Date(),
-        analysisData: { sections } as unknown as Prisma.InputJsonValue,
-      },
-    });
+    // 5. Normalize Sections
+    const normalizedResume = normalizeSections(sections);
+
+    logger.info(`[Resume Controller] Normalized resume for user: ${userId}`);
+
+    // 6. Create/Update Resume Record in DB
+    // const resume = await prisma.resume.upsert({
+    //   where: { userId },
+    //   update: {
+    //     fileName: file.originalname,
+    //     fileSize: file.size,
+    //     fileMimeType: file.mimetype,
+    //     fileUrl: storageResult.fileUrl,
+    //     storageKey: storageResult.storageKey,
+    //     storageBucket: storageResult.storageBucket,
+    //     rawText: cleanedText,
+    //     processingStatus: "COMPLETED",
+    //     processedAt: new Date(),
+    //     parsedData: normalizedResume as any,
+    //   },
+    //   create: {
+    //     userId,
+    //     fileName: file.originalname,
+    //     fileSize: file.size,
+    //     fileMimeType: file.mimetype,
+    //     fileUrl: storageResult.fileUrl,
+    //     storageKey: storageResult.storageKey,
+    //     storageBucket: storageResult.storageBucket,
+    //     rawText: cleanedText,
+    //     processingStatus: "COMPLETED",
+    //     processedAt: new Date(),
+    //     parsedData: normalizedResume as any,
+    //   },
+    // });
+
+    console.log("normalizedResume", JSON.stringify(normalizedResume, null, 2));
 
     return res.status(200).json({
       success: true,
       message: "Resume uploaded and processed successfully",
-      resume: {
-        id: resume.id,
-        fileName: resume.fileName,
-        processingStatus: resume.processingStatus,
-      },
+      // resume: {
+      //   id: resume.id,
+      //   fileName: resume.fileName,
+      //   processingStatus: resume.processingStatus,
+      //   normalized: normalizedResume,
+      // },
     });
   } catch (error) {
     logger.error(

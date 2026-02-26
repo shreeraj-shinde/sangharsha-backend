@@ -16,6 +16,9 @@ export const authenticate = (
 ) => {
   const token = req.cookies.token;
 
+  logger.debug(`[Auth Middleware] Request: ${req.method} ${req.originalUrl}`);
+  logger.debug(`[Auth Middleware] Raw Cookies: ${req.headers.cookie}`);
+
   if (!token) {
     logger.warn("[Auth Middleware] No token found in cookies");
     return res.status(401).json({
@@ -34,19 +37,26 @@ export const authenticate = (
       });
     }
 
-    const decoded = jwt.verify(token, secret) as {
-      id: string;
-      name: string;
-      email: string;
-      role: string;
-    };
+    const decoded = jwt.verify(token, secret) as any;
+
+    logger.debug(
+      `[Auth Middleware] Token successfully verified for ID: ${decoded.id}`,
+    );
+
     req.id = decoded.id;
     req.name = decoded.name;
     req.email = decoded.email;
     req.role = decoded.role;
     next();
   } catch (error) {
-    logger.warn(`[Auth Middleware] Invalid token: ${error}`);
+    if (error instanceof jwt.TokenExpiredError) {
+      const decoded = jwt.decode(token) as any;
+      logger.warn(
+        `[Auth Middleware] Token expired. iat: ${decoded?.iat}, exp: ${decoded?.exp}, current: ${Math.floor(Date.now() / 1000)}`,
+      );
+    } else {
+      logger.warn(`[Auth Middleware] Invalid token: ${error}`);
+    }
     return res.status(401).json({
       success: false,
       message: "Unauthorized: Invalid token",

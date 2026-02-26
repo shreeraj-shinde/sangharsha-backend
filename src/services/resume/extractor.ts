@@ -25,12 +25,21 @@ export function detectFileType(
  */
 export async function extractText(buffer: Buffer, fileType: string) {
   try {
+    // Convert Buffer to Uint8Array as some libraries (like newer pdf-parse or mammoth) may prefer it
+    const uint8Array = new Uint8Array(
+      buffer.buffer,
+      buffer.byteOffset,
+      buffer.length,
+    );
+
     switch (fileType) {
       case "pdf":
-        const pdfData = new PDFParse(buffer);
-        return pdfData.getText();
+        const pdfData = new PDFParse(uint8Array);
+        return await pdfData.getText();
       case "docx":
-        const docxData = await mammoth.extractRawText({ buffer });
+        const docxData = await mammoth.extractRawText({
+          buffer: uint8Array as Buffer<ArrayBufferLike>,
+        });
         return docxData.value;
       case "txt":
         return buffer.toString("utf-8");
