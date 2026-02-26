@@ -38,7 +38,7 @@ jobs:
             package.json
             package-lock.json
             prisma
-            !node_modules
+            node_modules
 
   deploy:
     runs-on: ubuntu-latest
