@@ -26,6 +26,7 @@ jobs:
       - name: yarn install and build
         run: |
           yarn install
+          npx prisma generate
           yarn build
 
       - name: Upload artifact for deployment job
