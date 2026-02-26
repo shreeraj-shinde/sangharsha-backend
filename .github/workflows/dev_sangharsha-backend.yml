@@ -23,10 +23,10 @@ jobs:
         with:
           node-version: "22.x"
 
-      - name: npm install and build
+      - name: yarn install and build
         run: |
-          npm install
-          npm run build
+          yarn install
+          yarn build
           cp -r src/generated dist/generated
 
       - name: Upload artifact for deployment job
